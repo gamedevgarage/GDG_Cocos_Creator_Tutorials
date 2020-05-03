@@ -8,8 +8,6 @@ cc.Class({
 
     onLoad () {
 
-        window.Test_Node = this.node;
-
         // Rigid Body
         this.Rigid_Body = this.node.getComponent(cc.RigidBody);
 
@@ -66,7 +64,6 @@ cc.Class({
     },
 
     onBeginContact(contact, selfCollider, otherCollider){
-        cc.log("begin!");
         if(selfCollider.tag === 2){
             this.On_The_Ground = true;
         }
