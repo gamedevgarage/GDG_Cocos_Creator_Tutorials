@@ -1,0 +1,135 @@
+{
+  "__type__": "cc.AnimationClip",
+  "_name": "bomb_explosion",
+  "_objFlags": 0,
+  "_native": "",
+  "_duration": 2.35,
+  "sample": 60,
+  "speed": 1,
+  "wrapMode": 1,
+  "curveData": {
+    "paths": {
+      "Explosion": {
+        "props": {
+          "active": [
+            {
+              "frame": 2,
+              "value": false
+            },
+            {
+              "frame": 2.0166666666666666,
+              "value": true
+            }
+          ],
+          "scale": [
+            {
+              "frame": 2,
+              "value": {
+                "__type__": "cc.Vec2",
+                "x": 1,
+                "y": 1
+              }
+            },
+            {
+              "frame": 2.3333333333333335,
+              "value": {
+                "__type__": "cc.Vec2",
+                "x": 1.176,
+                "y": 1.176
+              }
+            }
+          ],
+          "opacity": [
+            {
+              "frame": 2.0833333333333335,
+              "value": 255
+            },
+            {
+              "frame": 2.3333333333333335,
+              "value": 0
+            }
+          ]
+        }
+      },
+      "Bomb_Sprite": {
+        "props": {
+          "active": [
+            {
+              "frame": 2,
+              "value": true
+            },
+            {
+              "frame": 2.0166666666666666,
+              "value": false
+            }
+          ]
+        }
+      },
+      "Bomb_Sprite_Flasing": {
+        "props": {
+          "opacity": [
+            {
+              "frame": 0,
+              "value": 0
+            },
+            {
+              "frame": 0.16666666666666666,
+              "value": 200
+            },
+            {
+              "frame": 0.3333333333333333,
+              "value": 0
+            },
+            {
+              "frame": 0.5,
+              "value": 200
+            },
+            {
+              "frame": 0.6666666666666666,
+              "value": 0
+            },
+            {
+              "frame": 0.8333333333333334,
+              "value": 200
+            },
+            {
+              "frame": 1,
+              "value": 0
+            },
+            {
+              "frame": 1.1666666666666667,
+              "value": 200
+            },
+            {
+              "frame": 1.3333333333333333,
+              "value": 0
+            },
+            {
+              "frame": 1.5,
+              "value": 200
+            },
+            {
+              "frame": 1.6666666666666667,
+              "value": 0
+            },
+            {
+              "frame": 1.8333333333333333,
+              "value": 200
+            },
+            {
+              "frame": 2,
+              "value": 0
+            }
+          ]
+        }
+      }
+    }
+  },
+  "events": [
+    {
+      "frame": 2.35,
+      "func": "Remove_Node",
+      "params": []
+    }
+  ]
+}

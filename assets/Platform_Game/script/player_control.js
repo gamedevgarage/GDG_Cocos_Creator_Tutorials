@@ -4,9 +4,13 @@ cc.Class({
 
     properties: {
 
+        Bomb_Prefab:cc.Prefab,
+
     },
 
     onLoad () {
+
+        this.node.player_control = this;
 
         // Rigid Body
         this.Rigid_Body = this.node.getComponent(cc.RigidBody);
@@ -45,6 +49,10 @@ cc.Class({
                 }
             break;
 
+            case cc.macro.KEY.space:
+                this.Throw_Bomb();
+            break;
+
         }
 
     },
@@ -76,6 +84,21 @@ cc.Class({
         }
 
     },
+
+    Throw_Bomb(){
+
+        let bomb = cc.instantiate(this.Bomb_Prefab);
+
+        bomb.parent = this.node.parent;
+        let pos = this.node.getPosition();
+        pos.x += 70;
+        bomb.setPosition(pos);
+
+        let rb = bomb.getComponent(cc.RigidBody);
+
+        rb.applyForceToCenter(cc.v2(140000,200000),true);
+
+    }
 
 
 });
