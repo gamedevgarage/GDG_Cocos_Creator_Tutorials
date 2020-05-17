@@ -1,0 +1,10 @@
+{
+	"name": "gdg_obfuscate",
+	"version": "0.0.1",
+	"description": "Game Dev Garage Source Obfuscator",
+	"author": "Martin (Game Dev Garage)",
+	"main": "main.js",
+	"devDependencies": {
+		"javascript-obfuscator": "^0.28.1"
+	}
+}

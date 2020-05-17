@@ -1,0 +1,214 @@
+CCEffect %{
+  techniques:
+  - passes:
+    - name: phong
+      vert: vs
+      frag: fs
+      rasterizerState:
+        cullMode: back
+      depthStencilState:
+        depthTest: true
+        depthWrite: true
+      properties:
+        alphaThreshold: { value: 0.5 }
+        mainTiling: { value: [1, 1] }
+        mainOffset: { value: [0, 0] }
+        diffuseColor: { value: [1, 1, 1, 1], editor: { type: color } }
+        diffuseTexture: { value: white }
+        specularColor: { value: [1, 1, 1, 1], editor: { type: color } }
+        specularTexture: { value: white }
+        emissiveColor: { value: [0, 0, 0, 1], editor: { type: color } }
+        emissiveTexture: { value: white }
+        glossiness: { value: 10 }
+        normalTexture: { value: white }
+    - name: shadowcast
+      stage: shadowcast
+      vert: shadow-map-vs
+      frag: shadow-map-fs
+      rasterizerState:
+        cullMode: back
+      depthStencilState:
+        depthTest: true
+        depthWrite: true
+}%
+
+
+CCProgram vs %{
+
+  // Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
+
+  precision highp float;
+
+  #include <cc-local>
+  #include <cc-global>
+  #include <input-standard>
+  #include <shadow>
+
+  #define CC_USE_TEXTURE CC_USE_ATTRIBUTE_UV0 && (USE_DIFFUSE_TEXTURE || USE_EMISSIVE_TEXTURE || USE_SPECULAR_TEXTURE || USE_NORMAL_TEXTURE)
+
+  uniform MAIN_TILING {
+    vec2 mainTiling;
+    vec2 mainOffset;
+  };
+
+  #if CC_USE_TEXTURE
+    out mediump vec2 v_uv0;
+  #endif
+
+  #if CC_USE_ATTRIBUTE_COLOR
+    out lowp vec4 v_color;
+  #endif
+
+  #if USE_NORMAL_TEXTURE
+    out vec3 v_tangent;
+    out vec3 v_bitangent;
+  #endif
+
+  out vec3 v_worldNormal;
+  out vec3 v_worldPos;
+  out vec3 v_viewDirection;
+
+  out vec4 v_position;
+
+  void main () {
+    StandardVertInput In;
+    CCVertInput(In);
+
+    vec4 position = In.position;
+
+    v_worldNormal = normalize((cc_matWorldIT * vec4(In.normal, 0)).xyz);
+    v_worldPos = (cc_matWorld * position).xyz;
+    v_viewDirection = normalize(cc_cameraPos.xyz - v_worldPos);
+    
+    #if CC_USE_TEXTURE
+      v_uv0 = In.uv * mainTiling + mainOffset;
+    #endif
+
+    #if CC_USE_ATTRIBUTE_COLOR
+      v_color = In.color;
+    #endif
+
+    #if USE_NORMAL_TEXTURE
+      v_tangent = normalize((cc_matWorld * vec4(In.tangent.xyz, 0.0)).xyz);
+      v_bitangent = cross(v_worldNormal, v_tangent) * In.tangent.w; // note the cross order
+    #endif
+
+    CCShadowInput(v_worldPos);
+
+    v_position = In.position;
+
+    gl_Position = cc_matViewProj * cc_matWorld * position;
+  }
+
+}%
+
+
+CCProgram fs %{
+
+  // Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
+
+  precision highp float;
+
+  #include <cc-global>
+  #include <texture>
+  #include <output>
+  #include <alpha-test>
+
+  uniform PhongFrag {
+    lowp vec4 diffuseColor;
+    lowp vec4 specularColor;
+    lowp vec4 emissiveColor;
+    float glossiness;
+  };
+
+  #if USE_DIFFUSE_TEXTURE
+    uniform sampler2D diffuseTexture;
+  #endif
+
+  #if USE_SPECULAR && USE_SPECULAR_TEXTURE
+    uniform sampler2D specularTexture;
+  #endif
+
+  #if USE_EMISSIVE && USE_EMISSIVE_TEXTURE
+    uniform sampler2D emissiveTexture;
+  #endif
+
+  #if USE_NORMAL_TEXTURE
+    in vec3 v_tangent;
+    in vec3 v_bitangent;
+    uniform sampler2D normalTexture;
+  #endif
+
+  #define CC_USE_TEXTURE CC_USE_ATTRIBUTE_UV0 && (USE_DIFFUSE_TEXTURE || (USE_EMISSIVE && USE_EMISSIVE_TEXTURE) || (USE_SPECULAR && USE_SPECULAR_TEXTURE) || USE_NORMAL_TEXTURE)
+
+  in vec3 v_worldNormal;
+  in vec3 v_worldPos;
+  in vec3 v_viewDirection;
+
+  #if CC_USE_TEXTURE
+    in mediump vec2 v_uv0;
+  #endif
+
+  #if CC_USE_ATTRIBUTE_COLOR
+    in lowp vec4 v_color;
+  #endif
+
+  in vec4 v_position;
+
+  #include <shading-phong>
+
+  void surf (out PhongSurface s) {
+    vec4 diffuse = vec4(1, 1, 1, 1);
+    
+    #if CC_USE_ATTRIBUTE_COLOR
+      diffuse *= v_color;
+    #endif
+
+    diffuse *= diffuseColor;
+    #if USE_DIFFUSE_TEXTURE
+      CCTexture(diffuseTexture, v_uv0, diffuse);
+    #endif
+
+    ALPHA_TEST(diffuse);
+
+    s.diffuse = diffuse.rgb;
+    s.opacity = diffuse.a;
+
+    #if USE_EMISSIVE
+      s.emissive = emissiveColor.rgb;
+      #if USE_EMISSIVE_TEXTURE
+        CCTextureRGB(emissiveTexture, v_uv0, s.emissive);
+      #endif
+    #endif
+
+    #if USE_SPECULAR
+      s.specular = specularColor.rgb;
+      #if USE_SPECULAR_TEXTURE
+        CCTextureRGB(specularTexture, v_uv0, s.specular);
+      #endif
+    #endif
+
+    s.normal = v_worldNormal;
+    #if USE_NORMAL_TEXTURE
+      vec3 nmmp = texture(normalTexture, v_uv0).xyz - vec3(0.5);
+      s.normal =
+        nmmp.x * normalize(v_tangent) +
+        nmmp.y * normalize(v_bitangent) +
+        nmmp.z * normalize(s.normal);
+      s.normal = normalize(s.normal);
+    #endif
+
+    s.position = v_worldPos;
+    s.viewDirection = v_viewDirection;
+    s.glossiness = glossiness;
+  }
+
+  void main () {
+    PhongSurface s;
+    surf(s);
+    vec4 color = CCPhongShading(s);                             // Fog
+    gl_FragColor = CCFragOutput(color) * v_worldPos.x/100.0 /*  ( clamp( gl_FragCoord.w*500.0-0.5,0.0,1.0 ) ) */;
+  }
+
+
+}%

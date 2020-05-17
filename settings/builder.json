@@ -15,13 +15,13 @@
   "inlineSpriteFrames_native": false,
   "mergeStartScene": false,
   "optimizeHotUpdate": false,
-  "md5Cache": false,
+  "md5Cache": true,
   "encryptJs": true,
   "xxteaKey": "d74c88bf-e698-41",
   "zipCompressJs": true,
   "fb-instant-games": {},
   "android": {
-    "packageName": "com.elamet.geldi"
+    "packageName": "com.gamedevgarage.cctuts"
   },
   "ios": {
     "packageName": "org.cocos2d.demo"

@@ -1,0 +1,19 @@
+{
+  "__type__": "cc.Material",
+  "_name": "demo_material",
+  "_objFlags": 0,
+  "_native": "",
+  "_effectAsset": {
+    "__uuid__": "05e84cbe-78cf-4eda-a911-809e33c45196"
+  },
+  "_techniqueIndex": 0,
+  "_techniqueData": {
+    "0": {
+      "props": {
+        "wipe": 46.6,
+        "start_angle": 0
+      },
+      "defines": {}
+    }
+  }
+}

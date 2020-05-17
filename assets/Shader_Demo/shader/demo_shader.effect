@@ -1,0 +1,106 @@
+
+CCEffect %{
+  techniques:
+  - passes:
+    - vert: vs
+      frag: fs
+      blendState:
+        targets:
+        - blend: true
+      rasterizerState:
+        cullMode: none
+      properties:
+        start_angle: { value: 0.0 }
+        wipe: { value: 0.5 }
+        texture: { value: white ,editor: { visible: false }}
+        rx: { value: 0.0 , editor: { visible: false }}
+        ry: { value: 0.0 , editor: { visible: false }}
+        rw: { value: 1.0 , editor: { visible: false }}
+        rh: { value: 1.0 , editor: { visible: false }}
+        tw: { value: 1.0 , editor: { visible: false }}
+        th: { value: 1.0 , editor: { visible: false }}
+}%
+
+CCProgram vs %{
+
+precision highp float;
+
+#include <cc-global>
+#include <cc-local>
+
+
+in vec3 a_position;
+
+in mediump vec2 a_uv0;
+out mediump vec2 v_uv0;
+
+in vec4 a_color;
+out vec4 v_color;
+
+void main () {
+
+  vec4 pos = vec4(a_position, 1);
+  pos = cc_matViewProj * pos;
+  v_uv0 = a_uv0;
+
+  v_color = a_color;
+
+  gl_Position = pos;
+
+}
+
+}%
+
+CCProgram fs %{
+
+#define M_PI 3.1415926535897932384626433832795
+#define D2R  0.0174532925199432957692369076849
+
+precision highp float;
+
+
+#include <texture>
+
+uniform sampler2D texture;
+in mediump vec2 v_uv0;
+
+in vec4 v_color;
+
+uniform WipeShader {
+  lowp float wipe;
+  lowp float start_angle;
+  lowp float rx;
+  lowp float ry;
+  lowp float rw;
+  lowp float rh;
+  lowp float tw;
+  lowp float th;
+};
+
+
+float get_angle(vec2 v1, vec2 v2){
+  return atan(v1.x * v2.y - v1.y * v2.x, v1.x * v2.x + v1.y * v2.y);
+}
+
+void main () {
+
+  vec4 color = v_color;
+  CCTexture(texture, v_uv0, color);
+
+       
+  vec2 start_vector = vec2(sin(-start_angle*D2R),cos(-start_angle*D2R))*vec2(tw/rw,th/rh);
+
+  vec2 uv_fix = (v_uv0-vec2(rx/tw,ry/th))*vec2(tw/rw,th/rh);
+
+  float angle = get_angle(uv_fix-vec2(0.5,0.5),start_vector);
+
+  if(angle+wipe*D2R > M_PI){
+    color.a = 0.0;
+  }
+
+
+
+  gl_FragColor = vec4(color.r, color.g, color.b, color.a);
+}
+
+}%
