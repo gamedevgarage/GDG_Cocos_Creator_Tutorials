@@ -10,6 +10,8 @@ cc.Class({
 
     onLoad () {
 
+        window.test_comp = this;
+
         this.node.player_control = this;
 
         // Rigid Body

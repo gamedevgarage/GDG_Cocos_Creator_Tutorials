@@ -17,7 +17,6 @@ cc.Class({
     update (dt) {
 
         let target_position = this.Player_Node.getPosition();
-
         target_position.y = cc.misc.clampf(target_position.y,0,220);
 
         let current_position = this.node.getPosition();

@@ -1,0 +1,17 @@
+{
+  "__type__": "cc.Material",
+  "_name": "label_fix_mat",
+  "_objFlags": 0,
+  "_native": "",
+  "_effectAsset": {
+    "__uuid__": "b99ec797-3bd4-41bc-a883-1e751a8732b0"
+  },
+  "_techniqueIndex": 0,
+  "_techniqueData": {
+    "0": {
+      "defines": {
+        "USE_TEXTURE": true
+      }
+    }
+  }
+}
