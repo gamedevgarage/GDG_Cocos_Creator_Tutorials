@@ -1,0 +1,37 @@
+{
+  "__type__": "cc.Material",
+  "_name": "Depth_Mat",
+  "_objFlags": 0,
+  "_native": "",
+  "_effectAsset": {
+    "__uuid__": "1d50125b-7a7d-43ac-a342-5722663d226f"
+  },
+  "_techniqueIndex": 0,
+  "_techniqueData": {
+    "0": {
+      "props": {
+        "emissiveColor": {
+          "__type__": "cc.Color",
+          "r": 0,
+          "g": 0,
+          "b": 0,
+          "a": 255
+        },
+        "fog_color": {
+          "__type__": "cc.Color",
+          "r": 190,
+          "g": 182,
+          "b": 148,
+          "a": 255
+        },
+        "fog_distance": 300,
+        "diffuseTexture": {
+          "__uuid__": "fead30cc-5f62-4e04-b0fe-b9f4b866bca1"
+        }
+      },
+      "defines": {
+        "USE_DIFFUSE_TEXTURE": true
+      }
+    }
+  }
+}

@@ -10,6 +10,8 @@ CCEffect %{
         depthTest: true
         depthWrite: true
       properties:
+        fog_color: { value: [1, 1, 1, 1], editor: { type: color } }
+        fog_distance: { value: 1000 }
         alphaThreshold: { value: 0.5 }
         mainTiling: { value: [1, 1] }
         mainOffset: { value: [0, 0] }
@@ -121,6 +123,11 @@ CCProgram fs %{
     float glossiness;
   };
 
+  uniform Fog{
+    vec4 fog_color;
+    float fog_distance;
+  };
+
   #if USE_DIFFUSE_TEXTURE
     uniform sampler2D diffuseTexture;
   #endif
@@ -206,8 +213,11 @@ CCProgram fs %{
   void main () {
     PhongSurface s;
     surf(s);
-    vec4 color = CCPhongShading(s);                             // Fog
-    gl_FragColor = CCFragOutput(color) * v_worldPos.x/100.0 /*  ( clamp( gl_FragCoord.w*500.0-0.5,0.0,1.0 ) ) */;
+    vec4 color = CCPhongShading(s);      
+
+    float fog_ratio =  1.0-exp(-gl_FragCoord.w*fog_distance); 
+
+    gl_FragColor = CCFragOutput(color) * fog_ratio + (1.0-fog_ratio) * fog_color;
   }
 
 
