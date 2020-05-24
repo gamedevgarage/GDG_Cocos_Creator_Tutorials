@@ -1,6 +1,6 @@
 {
   "__type__": "cc.Material",
-  "_name": "particle_material",
+  "_name": "Particle_Material",
   "_objFlags": 0,
   "_native": "",
   "_effectAsset": {
@@ -14,9 +14,7 @@
           "__uuid__": "f53cab61-694e-45bf-8b9d-c425f8e06233"
         }
       },
-      "defines": {
-        "OUTPUT_TO_GAMMA": false
-      }
+      "defines": {}
     }
   }
 }
