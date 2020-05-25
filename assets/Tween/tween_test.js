@@ -6,14 +6,16 @@ cc.Class({
 
     },
 
-
     start () {
 
         cc.tween(this.node)
-            .to(3, {scale: 2, position: cc.v3(100, 100, 100)})
-            .by(3, {scale: 3, position: cc.v3(200, 200, 200)}, {easing: 'sineOutIn'})
-            .tag(0).start();
-            
+        .repeatForever(
+            cc.tween().to(1,{scale: 2 , color: cc.color(255,0,0,255) }, {easing: "quadInOut"})
+                      .call(() => { cc.log('EXPLOSION!') })
+                      .to(1,{scale: 0.7 , color: cc.color(255,255,255,255)}, {easing: "quadInOut"})
+        )
+        .start();
+
     },
 
 });
