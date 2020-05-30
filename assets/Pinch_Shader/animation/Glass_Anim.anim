@@ -1,0 +1,61 @@
+{
+  "__type__": "cc.AnimationClip",
+  "_name": "Glass_Anim",
+  "_objFlags": 0,
+  "_native": "",
+  "_duration": 8.033333333333333,
+  "sample": 60,
+  "speed": 1,
+  "wrapMode": 2,
+  "curveData": {
+    "props": {
+      "position": [
+        {
+          "frame": 0,
+          "value": [
+            -404.642,
+            155.632,
+            0
+          ],
+          "curve": "linear"
+        },
+        {
+          "frame": 2.0166666666666666,
+          "value": [
+            346.634,
+            135.824,
+            0
+          ],
+          "curve": "linear"
+        },
+        {
+          "frame": 4.016666666666667,
+          "value": [
+            -328.241,
+            -107.527,
+            0
+          ],
+          "curve": "linear"
+        },
+        {
+          "frame": 6.016666666666667,
+          "value": [
+            298.53,
+            -134.409,
+            0
+          ],
+          "curve": "linear"
+        },
+        {
+          "frame": 8.033333333333333,
+          "value": [
+            -404.642,
+            155.632,
+            0
+          ]
+        }
+      ]
+    }
+  },
+  "events": []
+}
