@@ -1,14 +1,22 @@
 {
   "group-list": [
     "Objects",
-    "Walls"
+    "Walls",
+    "Rope"
   ],
   "collision-matrix": [
     [
       true,
+      true,
       true
     ],
     [
+      true,
+      false,
+      true
+    ],
+    [
+      true,
       true,
       false
     ]

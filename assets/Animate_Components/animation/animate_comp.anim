@@ -1,0 +1,41 @@
+{
+  "__type__": "cc.AnimationClip",
+  "_name": "animate_comp",
+  "_objFlags": 0,
+  "_native": "",
+  "_duration": 9.016666666666667,
+  "sample": 60,
+  "speed": 1,
+  "wrapMode": 2,
+  "curveData": {
+    "comps": {
+      "rope_part": {
+        "Anchor_Position": [
+          {
+            "frame": 0,
+            "value": 1,
+            "curve": "linear"
+          },
+          {
+            "frame": 2.5,
+            "value": 0
+          },
+          {
+            "frame": 4.516666666666667,
+            "value": 0,
+            "curve": "linear"
+          },
+          {
+            "frame": 7.016666666666667,
+            "value": 1
+          },
+          {
+            "frame": 9.016666666666667,
+            "value": 1
+          }
+        ]
+      }
+    }
+  },
+  "events": []
+}
