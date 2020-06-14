@@ -2,7 +2,8 @@
   "group-list": [
     "Objects",
     "Walls",
-    "Rope"
+    "Rope",
+    "UI"
   ],
   "collision-matrix": [
     [
@@ -18,6 +19,12 @@
     [
       true,
       true,
+      false
+    ],
+    [
+      false,
+      false,
+      false,
       false
     ]
   ],

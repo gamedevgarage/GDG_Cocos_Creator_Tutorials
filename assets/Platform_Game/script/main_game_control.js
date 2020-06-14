@@ -13,6 +13,8 @@ cc.Class({
         physics_manager.enabled = true;
         physics_manager.gravity = cc.v2 (0, -2000);
 
+        
+
 
         // cc.director.getPhysicsManager().debugDrawFlags = cc.PhysicsManager.DrawBits.e_aabbBit |
         // cc.PhysicsManager.DrawBits.e_pairBit |
