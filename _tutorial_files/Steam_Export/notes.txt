@@ -1,0 +1,39 @@
+
+
+I call main folder keeps our electron project as PROJECT folder.
+
+> Download Node.js
+> Install Electron Globally:
+    npm install electron -g
+> Run commands in PROJECT folder:
+    npm init -y
+    npm i --save-dev electron
+> Download Greenworks: https://github.com/greenheartgames/greenworks
+> Download Steamworks from steam (you'll have access when you open your steam developer account)
+> Put rename sdk folder in steamwork to steamworks_sdk and move it to deps in Greenworks folder
+> Run command in Greenworks folder:
+    npm install
+    npm install node-gyp -g
+    node-gyp rebuild --target=<electron_version> --arch=x64 --openssl_fips=1 --dist-url=https://electronjs.org/headers
+> Move build\Release\greenworks-win64.node file to lib in Greenworks folder
+> Make a folder named greenworks in your game folder
+> Copy greenworks.js and lib folder in Greenwork folder to greenworks folder you created in PROJECT folder.
+> Create a folder names game in PROJECT.
+> Put your Cocos Creator web-desktop build into game folder you created in PROJECT folder.
+> Put game icon into game folder as game.ico
+> Put a text file named steam_appid.txt includes your steam app id.
+> Run command to test your game
+    electron .
+> Install packer
+    npm install electron-packager -g
+> Build executable
+    electron-packager . SpaceKraft --platform=win32 --arch=x64 --overwrite --icon=game/game.ico
+> Wishlist SpaceKraft on Steam ;) https://store.steampowered.com/app/1703020/SpaceKraft/
+
+
+My Settings:
+    Electron version: 23.2.1
+    Node.js version: 18.15.0
+
+For Logging
+	electron . --enable-logging
